@@ -12,7 +12,7 @@ Légende : ⛓ = dépend d'une tâche précédente.
 
 ## Phase 0 : Mise en place
 
-- [ ] **T-001** Créer le dépôt Git et le projet Next.js (App Router, TypeScript strict, Tailwind, ESLint). Ajouter `.gitignore` (avec `.env.local`) et le premier commit contenant README, AGENTS et docs.
+- [x] **T-001** Créer le dépôt Git et le projet Next.js (App Router, TypeScript strict, Tailwind, ESLint). Ajouter `.gitignore` (avec `.env.local`) et le premier commit contenant README, AGENTS et docs.
 - [ ] **T-002** ⛓T-001 Ajouter les scripts `lint`, `typecheck`, `test` (Vitest) et une CI GitHub Actions qui les exécute avec `build`.
 - [ ] **T-003** ⛓T-001 Configurer les **tokens** de `docs/DESIGN.md` dans Tailwind (couleurs, rayons, espacements, échelle de texte) et la police via `next/font` avec chiffres tabulaires.
 - [ ] **T-004** ⛓T-001 Créer `src/lib/i18n/fr.ts` (structure + premiers textes) et `.env.example`.
