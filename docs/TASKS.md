@@ -15,7 +15,7 @@ Légende : ⛓ = dépend d'une tâche précédente.
 - [x] **T-001** Créer le dépôt Git et le projet Next.js (App Router, TypeScript strict, Tailwind, ESLint). Ajouter `.gitignore` (avec `.env.local`) et le premier commit contenant README, AGENTS et docs.
 - [x] **T-002** ⛓T-001 Ajouter les scripts `lint`, `typecheck`, `test` (Vitest) et une CI GitHub Actions qui les exécute avec `build`.
 - [x] **T-003** ⛓T-001 Configurer les **tokens** de `docs/DESIGN.md` dans Tailwind (couleurs, rayons, espacements, échelle de texte) et la police via `next/font` avec chiffres tabulaires.
-- [ ] **T-004** ⛓T-001 Créer `src/lib/i18n/fr.ts` (structure + premiers textes) et `.env.example`.
+- [x] **T-004** ⛓T-001 Créer `src/lib/i18n/fr.ts` (structure + premiers textes) et `.env.example`.
 - [ ] **T-005** Créer le projet Supabase et appliquer `supabase/migrations/0001_init.sql` (schéma et RLS de `docs/ARCHITECTURE.md`). Vérifier qu'un utilisateur ne peut lire que ses lignes.
 - [ ] **T-006** ⛓T-001 Déployer une première version « vide » sur Vercel (HTTPS) et vérifier le build.
 
