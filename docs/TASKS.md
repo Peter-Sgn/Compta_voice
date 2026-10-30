@@ -16,8 +16,8 @@ Légende : ⛓ = dépend d'une tâche précédente.
 - [x] **T-002** ⛓T-001 Ajouter les scripts `lint`, `typecheck`, `test` (Vitest) et une CI GitHub Actions qui les exécute avec `build`.
 - [x] **T-003** ⛓T-001 Configurer les **tokens** de `docs/DESIGN.md` dans Tailwind (couleurs, rayons, espacements, échelle de texte) et la police via `next/font` avec chiffres tabulaires.
 - [x] **T-004** ⛓T-001 Créer `src/lib/i18n/fr.ts` (structure + premiers textes) et `.env.example`.
-- [ ] **T-005** Créer le projet Supabase et appliquer `supabase/migrations/0001_init.sql` (schéma et RLS de `docs/ARCHITECTURE.md`). Vérifier qu'un utilisateur ne peut lire que ses lignes.
-- [ ] **T-006** ⛓T-001 Déployer une première version « vide » sur Vercel (HTTPS) et vérifier le build.
+- [x] **T-005** Créer le projet Supabase et appliquer `supabase/migrations/0001_init.sql` (schéma et RLS de `docs/ARCHITECTURE.md`). Vérifier qu'un utilisateur ne peut lire que ses lignes.
+- [x] **T-006** ⛓T-001 Déployer une première version « vide » sur Vercel (HTTPS) et vérifier le build.
 
 ## Phase 1 : Spikes (lever les risques tôt)
 

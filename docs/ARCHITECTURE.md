@@ -343,4 +343,6 @@ Fonctions pures, **entièrement testées avec Vitest** :
 - Tests unitaires obligatoires sur `money.ts`, `stats.ts`, `parse-postprocess.ts`, `dates.ts`.
 - Test manuel de référence : téléphone Android d'entrée de gamme, réseau 3G simulé, plein soleil (luminosité maximale), une main.
 - CI minimale (GitHub Actions) : `lint`, `typecheck`, `test`, `build`.
-- Commits petits, lisibles, au format `feat: …`, `fix: …`, `docs: …`, `chore: …`.
+- Commits petits, lisibles, au format `feat: …`, `fix: …`, `docs: …`, `chore: …`. 
+- Commits en français de préférence 
+
