@@ -1,11 +1,11 @@
 /**
- * PAGE TEMPORAIRE - SPIKE AUDIO (T-010)
+ * PAGE TEMPORAIRE - SPIKE AUDIO & UPLOAD (T-010 / T-011)
  *
  * Cette page sert exclusivement à tester la capture MediaRecorder sur mobile
- * (notamment Chrome Android et Safari iOS), à vérifier les types MIME produits,
- * la taille en Ko et la durée réelle, sans aucun appel externe.
+ * (notamment Chrome Android et Safari iOS, T-010) et l'envoi multipart/form-data
+ * au serveur Vercel pour valider taille et durée de traitement (T-011).
  *
- * Page temporaire destinée à être supprimée une fois le spike validé.
+ * Page temporaire destinée à être supprimée une fois les spikes validés.
  */
 
 "use client";
@@ -22,6 +22,12 @@ interface RecordingStats {
   durationSeconds: number;
 }
 
+interface UploadResponse {
+  sizeBytes: number;
+  mimeType: string;
+  processingTimeMs: number;
+}
+
 const COMMON_AUDIO_MIME_TYPES = [
   "audio/webm;codecs=opus",
   "audio/webm",
@@ -31,12 +37,19 @@ const COMMON_AUDIO_MIME_TYPES = [
   "audio/wav",
 ];
 
-const emptySubscribe = () => () => {};
+const emptySubscribe = () => () => { };
 
 export default function SpikeAudioPage() {
   const [status, setStatus] = useState<RecordingStatus>("idle");
   const [stats, setStats] = useState<RecordingStats | null>(null);
   const [audioUrl, setAudioUrl] = useState<string | null>(null);
+  const [audioBlob, setAudioBlob] = useState<Blob | null>(null);
+  const [isUploading, setIsUploading] = useState<boolean>(false);
+  const [uploadResult, setUploadResult] = useState<UploadResponse | null>(null);
+  const [uploadError, setUploadError] = useState<{
+    status?: number;
+    message: string;
+  } | null>(null);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [elapsedTime, setElapsedTime] = useState<number>(0);
 
@@ -81,6 +94,9 @@ export default function SpikeAudioPage() {
       URL.revokeObjectURL(audioUrl);
       setAudioUrl(null);
     }
+    setAudioBlob(null);
+    setUploadResult(null);
+    setUploadError(null);
     setStats(null);
     audioChunksRef.current = [];
 
@@ -133,6 +149,7 @@ export default function SpikeAudioPage() {
 
         const url = URL.createObjectURL(audioBlob);
         setAudioUrl(url);
+        setAudioBlob(audioBlob);
 
         setStats({
           recorderMimeType: recorder.mimeType || "(non renseigné par le navigateur)",
@@ -182,11 +199,63 @@ export default function SpikeAudioPage() {
     }
   };
 
+  const handleSendToServer = async () => {
+    if (!audioBlob) return;
+    setIsUploading(true);
+    setUploadResult(null);
+    setUploadError(null);
+
+    try {
+      const formData = new FormData();
+      const extension = audioBlob.type.includes("mp4") ? "mp4" : "webm";
+      formData.append("audio", audioBlob, `spike-record.${extension}`);
+
+      const response = await fetch("/api/spike-upload", {
+        method: "POST",
+        body: formData,
+      });
+
+      const data = await response.json().catch(() => null);
+
+      if (!response.ok) {
+        setUploadError({
+          status: response.status,
+          message:
+            (data && data.error) ||
+            `Erreur serveur (${response.status} : ${response.statusText || "requête refusée"}).`,
+        });
+        return;
+      }
+
+      if (data && data.success) {
+        setUploadResult({
+          sizeBytes: data.sizeBytes,
+          mimeType: data.mimeType,
+          processingTimeMs: data.processingTimeMs,
+        });
+      } else {
+        setUploadError({
+          status: response.status,
+          message: (data && data.error) || "Réponse inattendue du serveur.",
+        });
+      }
+    } catch (err: unknown) {
+      setUploadError({
+        message:
+          err instanceof Error
+            ? `Impossible de joindre le serveur : ${err.message}`
+            : "Impossible de joindre le serveur. Vérifie ta connexion.",
+      });
+    } finally {
+      setIsUploading(false);
+    }
+  };
+
   const supportedFormats = isClient && typeof MediaRecorder !== "undefined"
     ? COMMON_AUDIO_MIME_TYPES.map((mime) => ({
-        mime,
-        supported: MediaRecorder.isTypeSupported(mime),
-      }))
+      mime,
+      supported: MediaRecorder.isTypeSupported(mime),
+    }))
     : [];
 
   return (
@@ -245,12 +314,11 @@ export default function SpikeAudioPage() {
               status === "recording"
                 ? `Arrêter l'enregistrement (${elapsedTime}s)`
                 : status === "recorded"
-                ? "Enregistrer à nouveau"
-                : "Démarrer l'enregistrement"
+                  ? "Enregistrer à nouveau"
+                  : "Démarrer l'enregistrement"
             }
-            className={`w-28 h-28 rounded-full bg-accent-500 text-brand-900 shadow-mic flex items-center justify-center transition-transform active:scale-95 cursor-pointer motion-reduce:animate-none ${
-              status === "recording" ? "animate-breathe" : ""
-            }`}
+            className={`w-28 h-28 rounded-full bg-accent-500 text-brand-900 shadow-mic flex items-center justify-center transition-transform active:scale-95 cursor-pointer motion-reduce:animate-none ${status === "recording" ? "animate-breathe" : ""
+              }`}
           >
             {status === "recording" ? (
               <svg
@@ -286,8 +354,8 @@ export default function SpikeAudioPage() {
               {status === "recording"
                 ? "J'écoute…"
                 : status === "recorded"
-                ? "Appuie pour recommencer"
-                : "Appuie pour parler"}
+                  ? "Appuie pour recommencer"
+                  : "Appuie pour parler"}
             </span>
             {status === "recording" && (
               <span className="text-caption font-mono text-text-muted tabular-nums">
@@ -348,6 +416,67 @@ export default function SpikeAudioPage() {
                 className="w-full min-h-[48px]"
               />
             </div>
+
+            {/* Test Envoi Serveur (T-011) */}
+            <div className="pt-3 border-t border-border flex flex-col gap-3">
+              <button
+                type="button"
+                onClick={handleSendToServer}
+                disabled={isUploading || !audioBlob}
+                className="w-full min-h-12 px-4 py-3 rounded-button bg-brand-700 hover:bg-brand-900 active:scale-[0.99] disabled:opacity-50 text-surface font-semibold text-body transition-colors flex items-center justify-center gap-2 cursor-pointer"
+              >
+                {isUploading ? (
+                  <span>Envoi au serveur en cours...</span>
+                ) : (
+                  <span>Envoyer l&apos;enregistrement au serveur</span>
+                )}
+              </button>
+
+              {/* Erreur d'envoi */}
+              {uploadError && (
+                <div
+                  role="alert"
+                  className="rounded-card bg-danger/10 border border-danger/20 p-3 text-caption text-danger flex flex-col gap-1 text-left"
+                >
+                  <p className="font-semibold">
+                    {uploadError.status
+                      ? `Erreur ${uploadError.status}`
+                      : "Erreur de connexion"}
+                  </p>
+                  <p>{uploadError.message}</p>
+                </div>
+              )}
+
+              {/* Succès d'envoi */}
+              {uploadResult && (
+                <div className="rounded-card bg-brand-100 border border-brand-700/20 p-3 text-caption text-brand-900 flex flex-col gap-1.5 text-left">
+                  <p className="font-bold text-sale">
+                    ✓ Envoi réussi au serveur
+                  </p>
+                  <dl className="grid grid-cols-1 gap-1 text-xs">
+                    <div className="flex justify-between">
+                      <dt className="text-text-muted">Taille reçue :</dt>
+                      <dd className="font-mono font-medium">
+                        {uploadResult.sizeBytes.toLocaleString("fr-FR")} octets (
+                        {(uploadResult.sizeBytes / 1024).toFixed(2)} Ko)
+                      </dd>
+                    </div>
+                    <div className="flex justify-between">
+                      <dt className="text-text-muted">Type MIME serveur :</dt>
+                      <dd className="font-mono font-medium">
+                        {uploadResult.mimeType}
+                      </dd>
+                    </div>
+                    <div className="flex justify-between">
+                      <dt className="text-text-muted">Temps de traitement :</dt>
+                      <dd className="font-mono font-medium">
+                        {uploadResult.processingTimeMs} ms
+                      </dd>
+                    </div>
+                  </dl>
+                </div>
+              )}
+            </div>
           </section>
         )}
 
@@ -368,11 +497,10 @@ export default function SpikeAudioPage() {
                 >
                   <span>{mime}</span>
                   <span
-                    className={`px-2 py-0.5 rounded font-semibold text-[11px] ${
-                      supported
+                    className={`px-2 py-0.5 rounded font-semibold text-[11px] ${supported
                         ? "bg-green-100 text-green-800"
                         : "bg-zinc-100 text-zinc-500"
-                    }`}
+                      }`}
                   >
                     {supported ? "OUI" : "NON"}
                   </span>
