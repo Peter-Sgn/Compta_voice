@@ -218,49 +218,83 @@ export default function SpikeAudioPage() {
         )}
 
         {/* Zone d'action Enregistrement */}
-        <section className="rounded-2xl bg-white border border-[#E6E2D8] p-6 shadow-sm flex flex-col items-center text-center gap-4">
-          <h2 className="text-base font-semibold text-[#0B3D2E]">
-            {status === "recording"
-              ? "Enregistrement en cours..."
-              : status === "recorded"
-              ? "Enregistrement terminé"
-              : "Prêt à enregistrer"}
-          </h2>
+        <section className="rounded-card bg-surface border border-border p-6 shadow-soft flex flex-col items-center text-center gap-4">
+          <h2 className="sr-only">Capture audio</h2>
+          <style>{`
+            @keyframes mic-breathe {
+              0%, 100% {
+                transform: scale(1);
+              }
+              50% {
+                transform: scale(1.05);
+              }
+            }
+            @media (prefers-reduced-motion: no-preference) {
+              .animate-breathe {
+                animation: mic-breathe 300ms ease-in-out infinite;
+              }
+            }
+          `}</style>
 
-          {status === "recording" && (
-            <div className="flex flex-col items-center gap-2">
-              <div className="w-16 h-16 rounded-full bg-red-500 animate-pulse flex items-center justify-center text-white font-bold text-lg shadow-md">
+          <button
+            type="button"
+            onClick={
+              status === "recording" ? handleStopRecording : handleStartRecording
+            }
+            aria-label={
+              status === "recording"
+                ? `Arrêter l'enregistrement (${elapsedTime}s)`
+                : status === "recorded"
+                ? "Enregistrer à nouveau"
+                : "Démarrer l'enregistrement"
+            }
+            className={`w-28 h-28 rounded-full bg-accent-500 text-brand-900 shadow-mic flex items-center justify-center transition-transform active:scale-95 cursor-pointer motion-reduce:animate-none ${
+              status === "recording" ? "animate-breathe" : ""
+            }`}
+          >
+            {status === "recording" ? (
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+                className="w-10 h-10"
+                aria-hidden="true"
+              >
+                <rect x="6" y="6" width="12" height="12" rx="2" />
+              </svg>
+            ) : (
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2.2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="w-10 h-10"
+                aria-hidden="true"
+              >
+                <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z" />
+                <path d="M19 10v2a7 7 0 0 1-14 0v-2" />
+                <line x1="12" x2="12" y1="19" y2="22" />
+              </svg>
+            )}
+          </button>
+
+          <div className="flex flex-col items-center gap-1">
+            <span className="text-body font-semibold text-brand-900">
+              {status === "recording"
+                ? "J'écoute…"
+                : status === "recorded"
+                ? "Appuie pour recommencer"
+                : "Appuie pour parler"}
+            </span>
+            {status === "recording" && (
+              <span className="text-caption font-mono text-text-muted tabular-nums">
                 {elapsedTime}s
-              </div>
-              <p className="text-xs text-[#5E5E57]">
-                Parle pendant quelques secondes puis clique sur Arrêter.
-              </p>
-            </div>
-          )}
-
-          {status !== "recording" ? (
-            <button
-              type="button"
-              onClick={handleStartRecording}
-              className="w-full min-h-[48px] px-6 py-3 rounded-xl bg-[#116149] hover:bg-[#0B3D2E] text-white font-semibold transition-colors flex items-center justify-center gap-2"
-            >
-              <span aria-hidden="true">🎤</span>
-              <span>
-                {status === "recorded"
-                  ? "Enregistrer à nouveau"
-                  : "Démarrer l'enregistrement"}
               </span>
-            </button>
-          ) : (
-            <button
-              type="button"
-              onClick={handleStopRecording}
-              className="w-full min-h-[48px] px-6 py-3 rounded-xl bg-[#B42318] hover:bg-red-800 text-white font-semibold transition-colors flex items-center justify-center gap-2"
-            >
-              <span aria-hidden="true">⏹</span>
-              <span>Arrêter ({elapsedTime}s)</span>
-            </button>
-          )}
+            )}
+          </div>
         </section>
 
         {/* Résultats et réécoute */}
