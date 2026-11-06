@@ -23,7 +23,14 @@ Légende : ⛓ = dépend d'une tâche précédente.
 
 - [ ] **T-010 SPIKE** Vérifier les **formats audio** acceptés par Gemini (consulter la documentation à jour) et enregistrer un vocal court depuis Chrome Android et Safari iPhone avec `MediaRecorder`. Noter ici les types MIME produits et le format d'envoi retenu (conversion nécessaire ou non).
 - [ ] **T-011 SPIKE** ⛓T-006 Vérifier les **limites de l'hébergeur** (taille du corps, durée d'une fonction) avec un envoi audio de 10 s et de 30 s. Noter la durée maximale d'enregistrement retenue.
+Résultats T-011 : envoi d'un vocal de 60 s (environ 900 Ko) réussi sur Vercel.
+Limites documentées : corps de requête 4,5 Mo ; durée max d'une fonction 300 s (Hobby).
+Décision : enregistrement limité à 30 s côté interface ; plafond serveur 60 s / 1 Mo.
 - [ ] **T-012 SPIKE** Relire les **conditions** de l'offre gratuite de l'API Gemini et de Vercel (usage, données). Noter les conclusions et les actions avant ouverture à de vrais utilisateurs.
+Conclusions T-012 :
+- Vercel Hobby : usage personnel et non commercial uniquement. OK pour dev et portfolio ; Pro requis avant toute activité commerciale.
+- Gemini gratuit : les données envoyées peuvent servir à améliorer les produits Google et être relues par des humains ; ne pas y envoyer de données personnelles ou sensibles. Utilisateurs 18 ans et plus ; EEE, Royaume-Uni et Suisse réservés à l'offre payante.
+- Actions avant le pilote (T-131) : activer l'offre payante de Gemini avec un plafond de budget, OU tester avec des données fictives. Mettre à jour l'écran « Ce que nous gardons » (T-113).
 
 ## Phase 2 : Fondations de l'interface
 
