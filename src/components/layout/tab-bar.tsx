@@ -22,15 +22,17 @@ export function TabBar() {
   return (
     <nav
       aria-label="Navigation principale"
-      className="fixed bottom-0 left-0 right-0 z-40 bg-surface supports-[backdrop-filter]:bg-surface/72 supports-[backdrop-filter]:backdrop-blur-md border-t border-border"
+      className="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-[480px] z-40 bg-surface supports-[backdrop-filter]:bg-surface/72 supports-[backdrop-filter]:backdrop-blur-md border-t border-x border-border"
       style={{ paddingBottom: "env(safe-area-inset-bottom, 0px)" }}
     >
-      <div className="max-w-md mx-auto flex items-center justify-between px-2 h-16 relative">
+      <div className="w-full flex items-center justify-between px-2 h-16 relative">
         {/* 1. Accueil */}
         <Link
           href="/"
           className={`${navItemBase} ${
-            isHomeActive ? "text-brand-700 font-semibold" : "text-text-muted hover:text-text font-medium"
+            isHomeActive
+              ? "text-brand-700 font-semibold"
+              : "text-text-muted hover:text-text font-medium"
           }`}
           aria-current={isHomeActive ? "page" : undefined}
         >
@@ -54,7 +56,9 @@ export function TabBar() {
         <Link
           href="/journal"
           className={`${navItemBase} ${
-            isJournalActive ? "text-brand-700 font-semibold" : "text-text-muted hover:text-text font-medium"
+            isJournalActive
+              ? "text-brand-700 font-semibold"
+              : "text-text-muted hover:text-text font-medium"
           }`}
           aria-current={isJournalActive ? "page" : undefined}
         >
@@ -95,7 +99,7 @@ export function TabBar() {
             >
               <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z" />
               <path d="M19 10v2a7 7 0 0 1-14 0v-2" />
-              <line x1="12" y1="19" x2="12" y2="22" />
+              <line x1="12" x2="12" y1="19" y2="22" />
             </svg>
           </button>
         </div>
@@ -104,7 +108,9 @@ export function TabBar() {
         <Link
           href="/bilans"
           className={`${navItemBase} ${
-            isBilansActive ? "text-brand-700 font-semibold" : "text-text-muted hover:text-text font-medium"
+            isBilansActive
+              ? "text-brand-700 font-semibold"
+              : "text-text-muted hover:text-text font-medium"
           }`}
           aria-current={isBilansActive ? "page" : undefined}
         >
@@ -129,7 +135,9 @@ export function TabBar() {
         <Link
           href="/moi"
           className={`${navItemBase} ${
-            isMoiActive ? "text-brand-700 font-semibold" : "text-text-muted hover:text-text font-medium"
+            isMoiActive
+              ? "text-brand-700 font-semibold"
+              : "text-text-muted hover:text-text font-medium"
           }`}
           aria-current={isMoiActive ? "page" : undefined}
         >
@@ -152,4 +160,3 @@ export function TabBar() {
     </nav>
   );
 }
-
