@@ -106,6 +106,9 @@ Règles :
 
 Le bouton micro dépasse légèrement de la barre, avec une ombre douce et la couleur d'accent : impossible à rater, même pour un premier usage. La barre ne bouge pas pendant les transitions entre onglets.
 
+### Affichage sur grand écran
+L'application est conçue pour téléphone. Sur un écran large, elle s'affiche dans une colonne centrée de 480 px maximum, sur un fond neutre. La barre d'onglets, les feuilles qui montent du bas et les bandeaux restent alignés sur cette colonne, jamais sur toute la largeur de la fenêtre.
+
 ---
 
 ## 4. Écrans et sous-pages
