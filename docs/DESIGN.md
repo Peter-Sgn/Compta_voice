@@ -61,6 +61,35 @@ Exigence : **contraste élevé** (AA minimum, viser AAA pour les montants) pour 
 - Illustrations : personnages et décors locaux (marchés, étals, pagnes), pas d'images génériques occidentales.
 - Icônes : lucide-react, toujours accompagnées d'un libellé quand l'espace le permet.
 
+### Surfaces translucides (« verre ») : usage restreint
+
+Tokens :
+- glass-on-dark : fond blanc à 14 % d'opacité, bordure blanche à 28 %, flou 12 px. Réservé aux cartes posées sur la bande verte (brand-900 vers brand-700).
+- glass-on-light : fond blanc à 72 % d'opacité, bordure `border`, flou 8 px. Réservé à la barre d'onglets et aux feuilles qui montent du bas.
+- tint-soft : brand-100 à 60 % d'opacité, pour les cartes d'astuce et les messages d'information.
+
+STRUCTURE ET TRANSPARENCE (voir la nouvelle section « Surfaces translucides » de docs/DESIGN.md)
+Fais de la page de démonstration une vraie page structurée, dans un conteneur de 360 px :
+1. Bande d'en-tête verte (dégradé brand-900 vers brand-700, coins du bas arrondis de 24 px) avec une salutation et la date, puis une carte « verre » (glass-on-dark) contenant « Ce qui me reste » en chiffre héros, et en dessous deux sous-blocs côte à côte, « J'ai vendu » et « J'ai dépensé », séparés par un filet fin.
+2. Section « Cette semaine » : carte pleine avec une mini-courbe ou de petites barres (valeurs fictives, SVG simple).
+3. Section « Dernières opérations » : un seul bloc plein, avec les lignes séparées par des filets fins, et le lien « Voir tout ».
+4. Une carte d'astuce en tint-soft.
+5. Une barre d'onglets factice en bas (glass-on-light), pour juger le rendu du flou.
+Implémente les tokens de verre dans le thème Tailwind, avec repli en couleur pleine via @supports not (backdrop-filter) et prise en compte de prefers-reduced-transparency lorsque le navigateur la gère. Pas plus de 2 éléments avec flou sur la page. Vérifie le contraste du texte sur chaque surface et dis-moi les valeurs mesurées.
+
+Règles :
+1. Maximum 2 éléments avec flou (backdrop-filter) par écran.
+2. Les montants et les textes importants ne sont jamais posés sur un fond clair translucide : soit texte blanc sur vert profond (contraste d'au moins 7:1), soit surface pleine.
+3. Repli obligatoire : si le navigateur ne gère pas le flou (@supports), ou si l'utilisateur demande moins de transparence, utiliser une couleur pleine équivalente.
+4. Listes, graphiques et formulaires : surfaces pleines (surface), jamais translucides.
+
+### Structure type d'une page
+
+1. Bande d'en-tête (brand-900 vers brand-700, coins inférieurs arrondis de 24 px) : salutation, date et carte « verre » avec le chiffre principal.
+2. Sections empilées sur le fond bg, chacune avec un titre (20 px gras) et, si utile, un lien « Voir tout » à droite.
+3. Une section = une carte pleine ou un groupe de lignes séparées par des filets fins.
+4. Espace de 24 px entre sections, 16 px de marge latérale, contenu aligné à gauche.
+
 ---
 
 ## 3. Navigation

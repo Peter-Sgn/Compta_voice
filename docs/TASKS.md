@@ -34,8 +34,8 @@ Conclusions T-012 :
 
 ## Phase 2 : Fondations de l'interface
 
-- [ ] **T-020** ⛓T-003 Composants de base dans `components/ui/` : `Button` (48 px), `Card`, `Chip`, `AmountText` (couleur + icône + signe pour ventes et dépenses), `Skeleton`. Page de démonstration temporaire pour les voir.
-- [ ] **T-021** ⛓T-020 Layout de l'application : **barre d'onglets en bas** (Accueil, Journal, micro, Bilans, Moi), bouton micro central de 72 px avec ombre, transitions légères, barre fixe pendant les changements d'onglet.
+- [x] **T-020** ⛓T-003 Composants de base dans `components/ui/` : `Button` (48 px), `Card`, `Chip`, `AmountText` (couleur + icône + signe pour ventes et dépenses), `Skeleton`. Page de démonstration temporaire pour les voir.
+- [x] **T-021** ⛓T-020 Layout de l'application : **barre d'onglets en bas** (Accueil, Journal, micro, Bilans, Moi), bouton micro central de 72 px avec ombre, transitions légères, barre fixe pendant les changements d'onglet.
 - [ ] **T-022** ⛓T-021 Composant `Sheet` (feuille qui monte du bas) avec geste de fermeture et respect de `prefers-reduced-motion`.
 - [ ] **T-023** ⛓T-021 `OfflineBanner` et états de base (écran vide, erreur douce) réutilisables.
 
@@ -111,6 +111,10 @@ Conclusions T-012 :
 - [ ] **T-123** Compléter les **tests unitaires** manquants et vérifier la couverture de `money`, `stats`, `parse-postprocess`, `dates`.
 - [ ] **T-124** Soigner le **README** : captures d'écran des trois écrans clés, GIF de démonstration de 30 secondes, schéma d'architecture, lien vers l'application en ligne.
 - [ ] **T-125** Relire les **conditions** des offres gratuites (voir T-012) avant d'ouvrir à de vrais utilisateurs ; renseigner la limite quotidienne d'appels IA.
+
+- [ ] **T-024** ⛓T-021 Accueil STATIQUE provisoire avec données fictives (aucune base de données) : bande d'en-tête verte, carte « verre » avec « Ce qui me reste », ventes et dépenses du jour, section « Dernières opérations », carte d'astuce. Sert uniquement à valider le rendu visuel ; sera remplacé par l'accueil réel (T-080).
+
+- [ ] **T-126** Passe de DESIGN : revue visuelle de tous les écrans sur téléphone (hiérarchie, espacements, contrastes, illustrations locales, animations), puis corrections au niveau des tokens et des composants.
 
 ## Phase 13 : Pilote avec de vrais commerçants
 
