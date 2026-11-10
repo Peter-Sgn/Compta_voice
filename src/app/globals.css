@@ -36,6 +36,10 @@
   /* Ombres */
   --shadow-soft: 0 2px 8px 0 rgba(0, 0, 0, 0.05);
   --shadow-mic: 0 4px 16px 0 rgba(245, 165, 36, 0.35);
+
+  /* Animations (T-024) */
+  --animate-slide-up: slide-up 250ms ease-out both;
+  --animate-bar-grow: bar-grow 400ms ease-out both;
 }
 
 :root {
@@ -48,5 +52,50 @@ body {
   color: var(--color-text);
   font-family: var(--font-sans);
   font-variant-numeric: tabular-nums;
+}
+
+/* ─── Animations d'apparition en cascade (T-024) ──────────────────────────── */
+
+@keyframes slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Croissance des barres SVG depuis le bas */
+@keyframes bar-grow {
+  from {
+    transform: scaleY(0);
+  }
+  to {
+    transform: scaleY(1);
+  }
+}
+
+/* Utilitaires d'animation utilisés dans page.tsx */
+.animate-slide-up {
+  animation: var(--animate-slide-up);
+  animation-fill-mode: both;
+}
+
+.animate-bar-grow {
+  animation: var(--animate-bar-grow);
+  transform-origin: bottom;
+  animation-fill-mode: both;
+}
+
+/* Désactivation stricte si l'utilisateur préfère moins de mouvement */
+@media (prefers-reduced-motion: reduce) {
+  .animate-slide-up,
+  .animate-bar-grow {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
 }
 

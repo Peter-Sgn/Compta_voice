@@ -22,6 +22,7 @@ export const fr = {
     close: "Fermer",
     loading: "Chargement...",
     offline: "Hors ligne : tes opérations sont gardées",
+    seeAll: "Voir tout",
   },
 
   nav: {
@@ -37,10 +38,15 @@ export const fr = {
     todaySales: "Ventes du jour",
     todayExpenses: "Dépenses du jour",
     todayBalance: "Ce qui me reste",
+    sold: "J'ai vendu",
+    spent: "J'ai dépensé",
+    thisWeek: "Cette semaine",
     recentOperations: "Dernières opérations",
     emptyDay: "Note ta première vente",
     streak: (days: number) => `${days} jour${days > 1 ? "s" : ""} de suite`,
     tipTitle: "Astuce du jour",
+    tipMonday: "Tu vends moins le lundi.",
+    bestDay: "Meilleur jour",
   },
 
   capture: {
