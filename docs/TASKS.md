@@ -37,7 +37,7 @@ Conclusions T-012 :
 - [x] **T-020** ⛓T-003 Composants de base dans `components/ui/` : `Button` (48 px), `Card`, `Chip`, `AmountText` (couleur + icône + signe pour ventes et dépenses), `Skeleton`. Page de démonstration temporaire pour les voir.
 - [x] **T-021** ⛓T-020 Layout de l'application : **barre d'onglets en bas** (Accueil, Journal, micro, Bilans, Moi), bouton micro central de 72 px avec ombre, transitions légères, barre fixe pendant les changements d'onglet.
 - [x] **T-022** ⛓T-021 Composant `Sheet` (feuille qui monte du bas) avec geste de fermeture et respect de `prefers-reduced-motion`.
-- [ ] **T-023** ⛓T-021 `OfflineBanner` et états de base (écran vide, erreur douce) réutilisables.
+- [x] **T-023** ⛓T-021 `OfflineBanner` et états de base (écran vide, erreur douce) réutilisables.
 
 ## Phase 3 : Comptes et profil
 

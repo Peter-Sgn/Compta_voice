@@ -126,6 +126,15 @@ export const fr = {
     rateLimitReached:
       "Tu as atteint la limite de requêtes pour aujourd'hui. Tu peux continuer à noter par écrit.",
   },
+
+  ui: {
+    emptyTitle: "Rien par ici pour l'instant",
+    emptyBody: "Note ta première vente pour commencer.",
+    emptyAction: "Enregistrer une vente",
+    retry: "Réessayer",
+    toastUndo: "Annuler",
+    offlineBanner: "Hors ligne : tes opérations sont gardées",
+  },
 } as const;
 
 export type TranslationDictionary = typeof fr;

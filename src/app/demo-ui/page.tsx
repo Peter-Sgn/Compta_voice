@@ -1,9 +1,10 @@
 /**
- * PAGE TEMPORAIRE - DÉMONSTRATION COMPOSANTS UI (T-020)
+ * PAGE TEMPORAIRE - DÉMONSTRATION COMPOSANTS UI (T-020, T-023)
  *
  * Cette page sert exclusivement à tester et visualiser les composants de base
- * (Button, Card, Chip, AmountText, Skeleton) et leurs différents états
- * en respectant les tokens de docs/DESIGN.md et les textes de fr.ts.
+ * (Button, Card, Chip, AmountText, Skeleton, EmptyState, SoftError, Toast)
+ * et leurs différents états en respectant les tokens de docs/DESIGN.md
+ * et les textes de fr.ts.
  *
  * Page temporaire destinée à être supprimée ou conservée en dev.
  */
@@ -18,17 +19,21 @@ import {
   Chip,
   AmountText,
   Skeleton,
+  EmptyState,
+  SoftError,
+  Toast,
 } from "@/components/ui";
 
 export default function DemoUiPage() {
   const [selectedFilter, setSelectedFilter] = useState<string>("all");
+  const [showToast, setShowToast] = useState(false);
 
   return (
     <div className="min-h-screen bg-bg text-text px-4 py-8 font-sans">
       <main className="max-w-md mx-auto flex flex-col gap-8">
         <header className="flex flex-col gap-1 border-b border-border pb-4">
           <span className="text-caption font-bold uppercase tracking-wider text-accent-500">
-            {fr.appName} • T-020
+            {fr.appName} • T-020 / T-023
           </span>
           <h1 className="text-title font-bold text-brand-900">
             {fr.confirmation.title}
@@ -161,8 +166,58 @@ export default function DemoUiPage() {
             <Skeleton rounded="button" className="h-12 w-full mt-2" />
           </div>
         </section>
+
+        {/* 6. État vide (T-023) */}
+        <section className="flex flex-col gap-4">
+          <p className="text-caption text-text-muted">
+            {fr.home.emptyDay}
+          </p>
+          <Card variant="default">
+            <EmptyState
+              title={fr.ui.emptyTitle}
+              body={fr.ui.emptyBody}
+              actionLabel={fr.ui.emptyAction}
+              onAction={() => undefined}
+            />
+          </Card>
+        </section>
+
+        {/* 7. Erreur douce (T-023) */}
+        <section className="flex flex-col gap-4">
+          <p className="text-caption text-text-muted">
+            {fr.errors.misunderstood}
+          </p>
+          <Card variant="default">
+            <SoftError
+              message={fr.errors.misunderstood}
+              retryLabel={fr.ui.retry}
+              onRetry={() => undefined}
+            />
+          </Card>
+        </section>
+
+        {/* 8. Toast avec annulation (T-023) */}
+        <section className="flex flex-col gap-4">
+          <p className="text-caption text-text-muted">
+            {fr.journal.undoDelete}
+          </p>
+          <Button
+            variant="secondary"
+            onClick={() => setShowToast(true)}
+          >
+            {fr.common.delete}
+          </Button>
+        </section>
+
+        {showToast && (
+          <Toast
+            message={fr.journal.undoDelete}
+            actionLabel={fr.ui.toastUndo}
+            onAction={() => setShowToast(false)}
+            onDismiss={() => setShowToast(false)}
+          />
+        )}
       </main>
     </div>
   );
 }
-
