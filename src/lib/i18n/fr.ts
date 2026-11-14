@@ -118,6 +118,24 @@ export const fr = {
       `${periodName} : ventes ${sales}, dépenses ${expenses}, il te reste ${remaining}. Ta meilleure journée : ${bestDay}.`,
   },
 
+  auth: {
+    title: "Connexion",
+    subtitle: "Entre ton email, on t'envoie un lien pour te connecter.",
+    emailLabel: "Ton email",
+    emailPlaceholder: "nom@exemple.com",
+    sendLink: "Envoyer le lien",
+    sending: "Envoi en cours...",
+    sentMessage:
+      "Regarde tes emails, on t'a envoyé un lien pour te connecter.",
+    resend: "Renvoyer le lien",
+    changeEmail: "Changer d'email",
+    emailInvalid: "Cet email ne semble pas valide.",
+    linkExpired: "Ce lien n'est plus valide. Demande-en un nouveau.",
+    rateLimit: "Réessaie dans quelques minutes.",
+    logout: "Se déconnecter",
+    loggingOut: "Déconnexion...",
+  },
+
   errors: {
     generic: "Une petite erreur est survenue. Réessaie dans un instant.",
     misunderstood: "Je n'ai pas bien compris. Tu peux répéter ou écrire ?",

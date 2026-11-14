@@ -41,7 +41,7 @@ Conclusions T-012 :
 
 ## Phase 3 : Comptes et profil
 
-- [ ] **T-030** ⛓T-005 Connexion par **lien magique** (Supabase Auth), page `/login`, protection des routes de l'application.
+- [x] **T-030** ⛓T-005 Connexion par **lien magique** (Supabase Auth), page `/login`, protection des routes de l'application.
 - [ ] **T-031** ⛓T-030 Création automatique du profil à la première connexion.
 - [ ] **T-032** ⛓T-031 **Onboarding** : choix de la langue, type de commerce (cartes illustrées), nom du commerce. Enregistrement dans `profiles`. Durée cible : moins de 60 secondes.
 

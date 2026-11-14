@@ -8,7 +8,8 @@
  * au retour du réseau. Utilise le hook useOnlineStatus.
  *
  * State is managed via a tiny external store to avoid calling setState
- * synchronously inside useEffect (React 19 lint rule).
+ * synchronously
+ *  inside useEffect (React 19 lint rule).
  */
 
 import { useEffect } from "react";
