@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { ensureProfile } from "@/lib/supabase/ensure-profile";
 import { createClient } from "@/lib/supabase/server";
 
 export async function GET(request: Request) {
@@ -15,6 +16,8 @@ export async function GET(request: Request) {
   if (error) {
     return NextResponse.redirect(`${origin}/login?error=link`);
   }
+
+  await ensureProfile(supabase);
 
   return NextResponse.redirect(`${origin}/`);
 }
